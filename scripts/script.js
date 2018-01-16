@@ -122,9 +122,9 @@ function displayPosts(){
 		
 		//TMP attributes///////////////
 
+		post_stats_div.appendChild(rating_text);
 		post_stats_div.appendChild(like_btn);
 		post_stats_div.appendChild(dislike_btn);
-		post_stats_div.appendChild(rating_text);
 		post_stats_div.appendChild(author);
 
 		post_div.appendChild(post_title);
