@@ -37,7 +37,7 @@ function register(nickname,email,password){
 			firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
 		    email: email,
 		    nickname: nickname,
-		    uid:currentUser.uid
+		    uid:firebase.auth().currentUser.uid
 		 }).then(function(){
 		  		window.location.replace("index.html");
 		  	});
