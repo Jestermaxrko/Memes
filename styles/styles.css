@@ -1,13 +1,16 @@
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
 .container {
 	width: 40%;
 	margin: auto;
 	border:2px solid #ccc;
+	font-family: 'Open Sans', sans-serif;
 }
 
 
 header {
-	border-bottom: 2px solid red;
+	border-bottom: 2px solid #ccc;
 	padding: 10px 0;
 }
 
@@ -38,28 +41,36 @@ header ul li a {
 }
 
 .post {
-	border-bottom: 2px solid black;
+	border-bottom: 1px solid #ccc;
+}
+
+.post h3{
+	margin:5px 0;
+	padding: 0;
+}
+
+.post_stats {
+	padding: 0px 10px;
+	padding-bottom: 10px;
+	padding-left:0; 
+	position: relative;
+	margin-bottom: 5px;
 }
 
 .rating {
 
+	font-weight: bold;
+	color:#777;
 	display: block;
 	margin: 0;
 	padding: 0;
 	margin-bottom: 10px;
 }
 
-
-.post_stats {
-	padding: 10px;
-	padding-left:0; 
-	position: relative;
-}
-
 .post a {
 	padding: 5px 10px;
 	border-radius: 4px;
-	border:2px solid black;
+	border:2px solid #ccc;
 	margin-right: 5px;
 
 }
