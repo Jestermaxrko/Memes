@@ -18,7 +18,7 @@ function initFirebase(){
 function checkUserIsSignIn(){
 	firebase.auth().onAuthStateChanged(function(user) {
   		if (user) {
-  			window.location.replace("index.html");
+  			//window.location.replace("index.html");
   		} 
 	});
 }
@@ -36,9 +36,10 @@ function register(nickname,email,password){
 
 			firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
 		    email: email,
-		    nickname: nickname
+		    nickname: nickname,
+		    uid:currentUser.uid
 		 }).then(function(){
-		  		
+		  		window.location.replace("index.html");
 		  	});
 		},function(error) {
   			var errorCode = error.code;
