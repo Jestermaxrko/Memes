@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>register</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="styles/register.css">
+	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+	<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+	<script defer type="text/javascript" src="scripts/register.js"></script>
+</head>
+<body>
+
+	<form>
+		
+
+		<input type="text" id="email" placeholder="email">
+		<input type="text" id="nickname" placeholder="nickname">
+		<input type="password" id="pass" placeholder="password">
+		<a onclick="register(nickname.value,email.value,pass.value)"> Register </a>
+		<span id="error"></span>
+
+	</form>
+
+</body>
+</html>

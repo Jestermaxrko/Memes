@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>UPload</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="styles/upload.css">
+	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+	<script type="text/javascript"  src="scripts/jquery-3.2.1.min.js"></script>
+	<script defer type="text/javascript" src="scripts/upload.js"></script>
+
+</head>
+<body>
+	<div class="container">
+		
+		<form>
+			<input type="text"  id="title_post" placeholder="title">
+			<input type="file"  id="file" placeholder="image">
+			<br>
+			<a onclick="uploadImage(title_post.value)">Save</a>
+		</form>
+
+	</div>
+</body>
+</html>

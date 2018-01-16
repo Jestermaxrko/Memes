@@ -1,0 +1,35 @@
+
+form {
+	width: 30%;
+	margin: auto;
+	text-align: center;
+}
+
+input,a {
+	display: block;
+	margin: 10px 0;
+	padding: 5px 10px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+a{
+	background-color: #ccc;
+}
+
+a:hover{
+
+	cursor: pointer;
+	background-color: #ddd;
+}
+
+
+
+@media only screen and (max-width: 900px){
+
+
+	form{
+		width: 100%;
+	}
+
+} 
