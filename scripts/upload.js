@@ -137,7 +137,7 @@ function loadToCanvas(){
             }*/
 
 
-            ctx.transform(0, 1, -1, 0, height , 0)
+            //ctx.transform(0, 1, -1, 0, height , 0)
             ctx.drawImage(img,0,0);
 
             document.getElementById("editor").style.display ="";
