@@ -6,6 +6,7 @@ var text_color;
 var stroke_color;
 var stroke_size;
 
+
 initFirebase();
 checkUserIsSignIn();
 
@@ -87,63 +88,74 @@ function uploadImage (title) {
 }
 
 
-function loadToCanvas(){
 
+function findExif(){
 
 	var file = document.getElementById("file").files[0];
+	EXIF.getData(file, function () {
+		 loadToCanvas(this.exifdata.Orientation);
+	});
+
+}
+
+function loadToCanvas(orientation){
+
+	console.log(orientation);
+
+	var file = document.getElementById("file").files[0];
+
 	var fr = new FileReader();
 	fr.onload = createImage;   // onload fires after reading is complete
 	fr.readAsDataURL(file);    // begin reading
-	var orientation;
+	
 
-		EXIF.getData(file, function () {
-    	orientation = this.exifdata.Orientation;
-});
+	 function createImage() {
+        img = new Image();
+        img.onload = imageLoaded;
+        img.src = fr.result;
+   	}
 
-		 function createImage() {
-            img = new Image();
-            img.onload = imageLoaded;
-            img.src = fr.result;
+    function imageLoaded() {
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-       	}
+        var width = img.width;
+        var height = img.height;
 
-        function imageLoaded() {
-            var canvas = document.getElementById("myCanvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
+        adaptFontSizes();
+        var ctx = canvas.getContext("2d");
 
-            var width = img.width;
-            var height = img.height;
+        if(orientation){
 
+        	if (4 < orientation && orientation < 9) {
+      			canvas.width = height;
+     			canvas.height = width;
+   			 } 
+   			 else {
+      			canvas.width = width;
+      			canvas.height = height;
+    		}
 
-            //if(img.height > img.width){
+	        switch(orientation){
+	        	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
+	        	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
+	        	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
+	        	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
+	        	 case 5:ctx.transform(0, 1, 1, 0, 0, 0);break;
+	        	 case 6:ctx.transform(0, 1, -1, 0, height , 0);break;
+	        	 case 7:ctx.transform(0, -1, -1, 0, height , width);break;
+	        	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
 
-            	img.style,imageOrientation = "-90deg";
-            //}
+	        }
+	    }
 
-            adaptFontSizes();
-            var ctx = canvas.getContext("2d");
+        ctx.drawImage(img,0,0);
 
-            /*switch(orientation){
-            	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
-            	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
-            	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
-            	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
-            	 case 5:ctx.transform(0, 1, 1, 0, 0, 0);break;
-            	 case 6:ctx.transform(0, 1, -1, 0, height , 0);break;
-            	 case 7:ctx.transform(0, -1, -1, 0, height , width);break;
-            	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
-
-            }*/
-
-
-            //ctx.transform(0, 1, -1, 0, height , 0)
-            ctx.drawImage(img,0,0);
-
-            document.getElementById("editor").style.display ="";
-            document.getElementById("save_btn").style.display="";
-           
-        }
+        document.getElementById("editor").style.display ="";
+        document.getElementById("save_btn").style.display="";
+       
+    }
 }
 
 
