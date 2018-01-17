@@ -2,10 +2,15 @@
 form {
 	width: 30%;
 	margin: auto;
+	
+}
+
+.load_img{
 	text-align: center;
 }
 
-input,a {
+.load_img input,a {
+
 	display: block;
 	margin: 10px 0;
 	padding: 5px 10px;
@@ -25,11 +30,55 @@ a:hover{
 
 
 
+.instruments {
+	margin-bottom: 10px; 
+}
+
+.instruments ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.instruments ul li {
+	display: inline-block;
+}
+
+.instruments input{
+	width: 40px;
+	box-sizing: border-box;
+}
+
+#font_size{
+	width:60px;
+}
+
+.text_input {
+	width: 100%;
+	box-sizing: border-box;margin: 0;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+
+canvas{
+	width: 100%;
+}
+
 @media only screen and (max-width: 900px){
 
 
 	form{
 		width: 100%;
+	}
+
+	.instruments ul li {
+		display: block;
+		margin-bottom: 10px;
+		width: 100%; 
+	}
+
+	.instruments ul li input{
+		float: right;
 	}
 
 } 

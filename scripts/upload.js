@@ -1,8 +1,15 @@
 
 var current_user ;
+var img;
+var font_size;
+var text_color;
+var stroke_color;
+var stroke_size;
 
 initFirebase();
 checkUserIsSignIn();
+
+
 
 
 ///////////////FIREBASE///////////////////
@@ -40,36 +47,164 @@ function uploadImage (title) {
 	if(current_user){
 
 		const ref = firebase.storage().ref();
-		const file = document.querySelector('#file').files[0];
-		
-	
-		console.log(title);
-		console.log(file);
 
+		var image = new Image();
+		image.src = document.getElementById("myCanvas").toDataURL();
+	
+
+
+		//const file = document.querySelector('#file').files[0];
+		//const file = document.getElementById("myCanvas").toDataURL();
 		if(title && file){
 
 			const name = (+new Date()) + '-' + file.name;
 			const metadata = { contentType: file.type };
-			const task = ref.child(name).put(file, metadata);
+			var task;// = ref.child(name).put(file, metadata);
 
-			task.then((snapshot) => {
-		     
-		    var post = {
-		    	name:title,
-		    	rating:0,
-		    	url:snapshot.downloadURL,
-		    	author:current_user.uid,
-		    	author_name:current_user.nickname,
-		    	timestamp:(+new Date())
-		    }
+			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
+  			 	
+				var post = {
+			    	name:title,
+			    	rating:0,
+			    	url:snapshot.downloadURL,
+			    	author:current_user.uid,
+			    	author_name:current_user.nickname,
+			    	timestamp:(+new Date())
+		    	}
 		  	
-		  	firebase.database().ref('posts/').push(post).then(function(){
+		  		firebase.database().ref('posts/').push(post).then(function(){
 
-		  		window.location.replace("index.html");	
+		  			window.location.replace("index.html");	
+		  		});
 
-		  	});
+			});	
+
 			
-			});
 		}
 	}
+}
+
+
+function loadToCanvas(){
+
+
+	var file = document.getElementById("file").files[0];
+	var fr = new FileReader();
+	fr.onload = createImage;   // onload fires after reading is complete
+	fr.readAsDataURL(file);    // begin reading
+
+
+	 function createImage() {
+            img = new Image();
+            img.onload = imageLoaded;
+            img.src = fr.result;
+        }
+
+        function imageLoaded() {
+            var canvas = document.getElementById("myCanvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            adaptFontSizes();
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img,0,0);
+
+            document.getElementById("editor").style.display ="";
+            document.getElementById("save_btn").style.display="";
+           
+        }
+}
+
+
+function wrapText(context, text, x, y, maxWidth, lineHeight,position) {
+        
+        var words = text.split(' ');
+        var line = '';
+        var lines = 0;
+        var lines_arr = [];
+
+        for(var n = 0; n < words.length; n++) {
+          	var testLine = line + words[n] + ' ';
+          	var metrics = context.measureText(testLine);
+          	var testWidth = metrics.width;
+
+          	if (testWidth > maxWidth && n > 0) {
+	          	lines_arr.push(line);
+	            line = words[n] + ' ';
+	            lines++;
+          	}
+          	else {
+            	line = testLine;
+          	}
+        }
+       
+       	if(line!=" ")
+        	lines_arr.push(line);
+        
+        for(var i=0;i<lines_arr.length;i++){
+
+        	if(position==1){
+        		console.log(y+i*lineHeight);
+        		console.log("i = " + i);
+        		context.fillText(lines_arr[i], x, (y+i*lineHeight));
+        		context.strokeText(lines_arr[i], x, (y+i*lineHeight));
+        	}else {
+        		context.fillText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight);
+        		context.strokeText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight);
+        	}
+        		
+        }
+        
+ }
+
+function changeText(top_text,bottom_text){
+
+	var canvas = document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
+	ctx.clearRect ( 0 , 0 , 300 , 300 );
+	ctx.drawImage(img,0,0);
+
+	
+	ctx.font = font_size +"px Impact ";
+	ctx.lineWidth = stroke_size;
+	ctx.fillStyle = text_color;
+	ctx.strokeStyle = stroke_color;
+
+	var center = img.width/2;
+
+	ctx.textAlign="center"; 
+
+	console.log(" fonts : "+ font_size);
+	console.log(" line : "+ stroke_size);
+
+	wrapText(ctx, top_text, center, font_size, img.width, font_size,1);
+
+	wrapText(ctx, bottom_text, center, img.height-5, img.width, font_size,0);
+
+	/*ctx.fillText(top_text,center,font_size);
+    ctx.strokeText(top_text, center, font_size);
+
+   
+
+    ctx.fillText(bottom_text,center,img.height-5);
+    ctx.strokeText(bottom_text, center, img.height-5);*/
+}
+
+function adaptFontSizes(){
+
+	font_size = img.width/12;
+	stroke_size = 2;
+
+    document.getElementById("font_size").value = font_size;
+    text_color = (document.getElementById("text_color").value);
+	stroke_color = (document.getElementById("stroke_color").value);
+
+}
+
+function setDrawStyles(){
+	font_size = (+document.getElementById("font_size").value);
+	text_color = (document.getElementById("text_color").value);
+	stroke_color = (document.getElementById("stroke_color").value);
+
+	changeText(document.getElementById("top").value,document.getElementById("bottom").value)
+	
 }

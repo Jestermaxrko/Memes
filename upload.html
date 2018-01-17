@@ -13,10 +13,54 @@
 	<div class="container">
 		
 		<form>
-			<input type="text"  id="title_post" placeholder="title">
-			<input type="file"  id="file" placeholder="image">
-			<br>
-			<a onclick="uploadImage(title_post.value)">Save</a>
+
+			<div class="load_img">
+				<input type="text"  id="title_post" placeholder="title">
+				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()">
+				<br>	
+			</div>
+
+			<div class="editor" id="editor" style="display: none;">
+
+				<div class="instruments">
+					
+					<ul>
+						<li> 
+							<span>Font : </span>
+							<input type="text" class="font_list" id="font_size" onchange="setDrawStyles()" />
+							
+						 </li>
+
+						 <li>
+						 
+						 	<span>Text : </span>
+						 	<input type="color" name="" id="text_color" value="#ffffff" onchange="setDrawStyles()"/>
+
+						 </li>
+
+						 <li>
+						 
+						 	<span>Stroke : </span>
+						 	<input type="color"  id="stroke_color" name="" onchange="setDrawStyles()"/>
+
+						 </li>
+
+					</ul>
+
+				</div>
+
+				<div class="preview">
+					<input type="text" id="top" class="text_input" onkeyup="changeText(this.value,bottom.value)" placeholder="top text">
+
+					<canvas id="myCanvas"></canvas>
+
+					<input type="text" id="bottom" class="text_input" onkeyup="changeText(top.value,this.value)" placeholder="bottom text">
+				</div>
+
+			</div>
+
+
+			<a  id ="save_btn" onclick="uploadImage(title_post.value)" style="display: none;">Save</a>
 		</form>
 
 	</div>
