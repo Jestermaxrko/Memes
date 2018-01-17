@@ -124,7 +124,7 @@ function loadToCanvas(){
             adaptFontSizes();
             var ctx = canvas.getContext("2d");
 
-            switch(orientation){
+            /*switch(orientation){
             	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
             	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
             	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
@@ -134,10 +134,10 @@ function loadToCanvas(){
             	 case 7:ctx.transform(0, -1, -1, 0, height , width);break;
             	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
 
+            }*/
 
 
-            }
-
+            ctx.transform(0, 1, -1, 0, height , 0)
             ctx.drawImage(img,0,0);
 
             document.getElementById("editor").style.display ="";
