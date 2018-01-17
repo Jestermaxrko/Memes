@@ -97,6 +97,7 @@ function displayPosts(){
 		var dislike_btn = document.createElement("a");
 		var rating_text = document.createElement("span");
 		var author = document.createElement("span");
+		var comment = document.createElement("a");
 
 		post_div.classList.add("post");
 		post_title.classList.add("post_name");
@@ -106,6 +107,7 @@ function displayPosts(){
 		dislike_btn.classList.add("button");
 		rating_text.classList.add("rating");
 		author.classList.add("author");
+		comment.classList.add("comment");
 
 		post_title.innerHTML = posts[i].name;
 		post_img.src = posts[i].url;
@@ -115,16 +117,24 @@ function displayPosts(){
 		dislike_btn.id=posts[i].id;
 		author.id = posts[i].author;
 		author.innerHTML = "Author : " + posts[i].author_name;
+		//comment.href = "comment.html";
+		comment.setAttribute("post_id",posts[i].id+"");
+		comment.innerHTML = "Comments";
 		like_btn.innerHTML = "LIKE";
 		dislike_btn.innerHTML = "DISLIKE";
+
 		like_btn.setAttribute("onclick","loadLikeState(this,1)");
 		dislike_btn.setAttribute("onclick","loadLikeState(this,-1)");
-		
+			
+		comment.setAttribute("onclick","loadComments(this)");
+
 		//TMP attributes///////////////
+		//post_div.setAttribute("onclick","copyDiv(this)");
 
 		post_stats_div.appendChild(rating_text);
 		post_stats_div.appendChild(like_btn);
 		post_stats_div.appendChild(dislike_btn);
+		post_stats_div.appendChild(comment);
 		post_stats_div.appendChild(author);
 
 		post_div.appendChild(post_title);
@@ -229,4 +239,21 @@ function changeRating(elem,action){
 function compareTime(a, b) {
   if (a.timestamp < b.timestamp) return 1;
   if (a.timestamp > b.timestamp) return -1;
+}
+
+
+function loadComments(elem){
+
+	var parent = elem.parentElement.parentElement.cloneNode(true);
+	console.log(parent);
+
+	localStorage.setItem('post_div', parent.outerHTML);
+
+
+	console.log(localStorage.getItem("post_div"));
+	
+	var win = window.open("comment.html", '_blank');
+    win.focus();
+
+
 }

@@ -1,0 +1,67 @@
+.comments_feed {
+	
+}
+
+.container {
+	padding: 5px;
+}
+
+.singe_comment{
+
+
+}
+
+.comments_wraper {
+	overflow-y: auto;
+}
+
+
+.comment_author {
+	margin: 0;
+	margin-left: 5px;
+	padding: 0;
+	display: inline-block;
+}
+
+.comment_text{
+	margin-left: 10px;
+	display: block;
+	font-size: 0.9em;
+}
+
+.comment_time{
+	font-size: x-small;
+	margin-left: 10px;
+	color:#aaa;
+	font-weight: bold;
+}
+
+
+.user_comment_div{
+
+	border-top:1px solid #ccc;
+	padding-top:10px; 
+	clear: both;
+}
+
+
+.text_area{
+	display: block;
+	width: 100%;
+	box-sizing: border-box;
+	outline: 0;
+}
+
+.send_btn{
+	width: 100%;
+	display: block;
+	margin-top: 10px;
+	text-align: center;
+	box-sizing: border-box;
+	border:1px solid #ccc;
+}
+
+.send_btn:hover{
+	cursor: pointer;
+	background-color: #eee;
+}

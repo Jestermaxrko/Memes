@@ -72,7 +72,7 @@ function uploadImage (title) {
 			    	url:snapshot.downloadURL,
 			    	author:current_user.uid,
 			    	author_name:current_user.nickname,
-			    	timestamp:(+new Date())
+			    	timestamp:Math.floor(Date.now())
 		    	}
 		  	
 		  		firebase.database().ref('posts/').push(post).then(function(){
