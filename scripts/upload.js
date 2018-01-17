@@ -50,16 +50,18 @@ function uploadImage (title) {
 
 		var image = new Image();
 		image.src = document.getElementById("myCanvas").toDataURL();
-	
+		
 
 
-		//const file = document.querySelector('#file').files[0];
-		//const file = document.getElementById("myCanvas").toDataURL();
+		const file = document.querySelector('#file').files[0];
+		
 		if(title && file){
 
 			const name = (+new Date()) + '-' + file.name;
 			const metadata = { contentType: file.type };
 			var task;// = ref.child(name).put(file, metadata);
+
+			console.log(name);
 
 			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
   			 	
@@ -94,16 +96,27 @@ function loadToCanvas(){
 	fr.readAsDataURL(file);    // begin reading
 
 
-	 function createImage() {
+		EXIF.getData(file, function () {
+    alert(this.exifdata.Orientation);
+});
+
+		 function createImage() {
             img = new Image();
             img.onload = imageLoaded;
             img.src = fr.result;
-        }
+
+       	}
 
         function imageLoaded() {
             var canvas = document.getElementById("myCanvas");
             canvas.width = img.width;
             canvas.height = img.height;
+
+            //if(img.height > img.width){
+
+            	img.style,imageOrientation = "-90deg";
+            //}
+
             adaptFontSizes();
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img,0,0);
