@@ -94,10 +94,10 @@ function loadToCanvas(){
 	var fr = new FileReader();
 	fr.onload = createImage;   // onload fires after reading is complete
 	fr.readAsDataURL(file);    // begin reading
-
+	var orientation;
 
 		EXIF.getData(file, function () {
-    alert(this.exifdata.Orientation);
+    	orientation = this.exifdata.Orientation;
 });
 
 		 function createImage() {
@@ -112,6 +112,10 @@ function loadToCanvas(){
             canvas.width = img.width;
             canvas.height = img.height;
 
+            var width = img.width;
+            var height = img.height;
+
+
             //if(img.height > img.width){
 
             	img.style,imageOrientation = "-90deg";
@@ -119,6 +123,21 @@ function loadToCanvas(){
 
             adaptFontSizes();
             var ctx = canvas.getContext("2d");
+
+            switch(orientation){
+            	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
+            	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
+            	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
+            	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
+            	 case 5:ctx.transform(0, 1, 1, 0, 0, 0);break;
+            	 case 6:ctx.transform(0, 1, -1, 0, height , 0);break;
+            	 case 7:ctx.transform(0, -1, -1, 0, height , width);break;
+            	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
+
+
+
+            }
+
             ctx.drawImage(img,0,0);
 
             document.getElementById("editor").style.display ="";
