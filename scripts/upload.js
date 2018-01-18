@@ -6,6 +6,7 @@ var text_color;
 var stroke_color;
 var stroke_size;
 var ctx;
+var orientation;
 
 
 initFirebase();
@@ -99,16 +100,19 @@ function findExif(){
 
 }
 
-function loadToCanvas(orientation){
+function loadToCanvas(orien){
 
-	console.log(orientation);
+	orientation = orien;
 
 	var file = document.getElementById("file").files[0];
-
 	var fr = new FileReader();
-	fr.onload = createImage;   // onload fires after reading is complete
-	fr.readAsDataURL(file);    // begin reading
+	fr.onload = createImage;      // onload fires after reading is complete
+	fr.readAsDataURL(file);      // begin reading
 	
+	var canvas = document.getElementById("myCanvas");
+	ctx = canvas.getContext("2d");
+    
+
 
 	 function createImage() {
         img = new Image();
@@ -117,18 +121,14 @@ function loadToCanvas(orientation){
    	}
 
     function imageLoaded() {
-        var canvas = document.getElementById("myCanvas");
+
         canvas.width = img.width;
         canvas.height = img.height;
-
         var width = img.width;
         var height = img.height;
-
         adaptFontSizes();
-        ctx = canvas.getContext("2d");
 
         if(orientation){
-
         	if (4 < orientation && orientation < 9) {
       			canvas.width = height;
      			canvas.height = width;
@@ -137,6 +137,8 @@ function loadToCanvas(orientation){
       			canvas.width = width;
       			canvas.height = height;
     		}
+    	
+    		ctx.save();
 
 	        switch(orientation){
 	        	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
@@ -151,7 +153,8 @@ function loadToCanvas(orientation){
 	        }
 	    }
 
-        ctx.drawImage(img,0,0);
+	    ctx.drawImage(img,0,0);
+	    ctx.restore();
 
         document.getElementById("editor").style.display ="";
         document.getElementById("save_btn").style.display="";
@@ -205,16 +208,48 @@ function changeText(top_text,bottom_text){
 
 	//var canvas = document.getElementById("myCanvas");
 	//var ctx = canvas.getContext("2d");
-	ctx.clearRect ( 0 , 0 , 300 , 300 );
-	ctx.drawImage(img,0,0);
+	//ctx.clearRect ( 0 , 0 , 300 , 300 );
+	var canvas = document.getElementById("myCanvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var width = img.width;
+        var height = img.height;
+       
 
-	
+        if(orientation){
+        	if (4 < orientation && orientation < 9) {
+      			canvas.width = height;
+     			canvas.height = width;
+     			var center = img.height/2;
+   			 } 
+   			 else {
+      			canvas.width = width;
+      			canvas.height = height;
+      			var center = img.width/2;
+    		}
+    		
+    		ctx.save();
+	        switch(orientation){
+	        	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
+	        	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
+	        	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
+	        	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
+	        	 case 5:ctx.transform(0, 1, 1, 0, 0, 0);break;
+	        	 case 6:ctx.transform(0, 1, -1, 0, height , 0);break;
+	        	 case 7:ctx.transform(0, -1, -1, 0, height , width);break;
+	        	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
+
+	        }
+	    }
+
+	    ctx.drawImage(img,0,0);
+	    ctx.restore();
+
 	ctx.font = font_size +"px Impact ";
 	ctx.lineWidth = stroke_size;
 	ctx.fillStyle = text_color;
 	ctx.strokeStyle = stroke_color;
 
-	var center = img.width/2;
 
 	ctx.textAlign="center"; 
 
@@ -223,7 +258,11 @@ function changeText(top_text,bottom_text){
 
 	wrapText(ctx, top_text, center, font_size, img.width, font_size,1);
 
-	wrapText(ctx, bottom_text, center, img.height-5, img.width, font_size,0);
+
+	if(orientation<5)
+		wrapText(ctx, bottom_text, center, img.height-5, img.width, font_size,0);
+	else 
+		wrapText(ctx, bottom_text, center, img.width-5, img.height, font_size,0);
 
 	/*ctx.fillText(top_text,center,font_size);
     ctx.strokeText(top_text, center, font_size);
