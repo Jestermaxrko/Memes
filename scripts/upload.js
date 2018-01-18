@@ -5,6 +5,7 @@ var font_size;
 var text_color;
 var stroke_color;
 var stroke_size;
+var ctx;
 
 
 initFirebase();
@@ -124,7 +125,7 @@ function loadToCanvas(orientation){
         var height = img.height;
 
         adaptFontSizes();
-        var ctx = canvas.getContext("2d");
+        ctx = canvas.getContext("2d");
 
         if(orientation){
 
@@ -192,8 +193,8 @@ function wrapText(context, text, x, y, maxWidth, lineHeight,position) {
         		context.fillText(lines_arr[i], x, (y+i*lineHeight));
         		context.strokeText(lines_arr[i], x, (y+i*lineHeight));
         	}else {
-        		context.fillText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight);
-        		context.strokeText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight);
+        		context.fillText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight-lineHeight/4 );
+        		context.strokeText(lines_arr[i], x, y-((lines_arr.length-1)*lineHeight) +i*lineHeight-lineHeight/4);
         	}
         		
         }
@@ -202,8 +203,8 @@ function wrapText(context, text, x, y, maxWidth, lineHeight,position) {
 
 function changeText(top_text,bottom_text){
 
-	var canvas = document.getElementById("myCanvas");
-	var ctx = canvas.getContext("2d");
+	//var canvas = document.getElementById("myCanvas");
+	//var ctx = canvas.getContext("2d");
 	ctx.clearRect ( 0 , 0 , 300 , 300 );
 	ctx.drawImage(img,0,0);
 
