@@ -4,6 +4,7 @@
 
 .container {
 	padding: 5px;
+	box-sizing: border-box;
 }
 
 .singe_comment{
