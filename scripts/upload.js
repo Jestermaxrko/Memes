@@ -103,6 +103,7 @@ function findExif(){
 function loadToCanvas(orien){
 
 	orientation = orien;
+	console.log(orien);
 
 	var file = document.getElementById("file").files[0];
 	var fr = new FileReader();
@@ -141,7 +142,7 @@ function loadToCanvas(orien){
     		ctx.save();
 
 	        switch(orientation){
-	        	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
+	        	 
 	        	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
 	        	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
 	        	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
@@ -230,7 +231,7 @@ function changeText(top_text,bottom_text){
     		
     		ctx.save();
 	        switch(orientation){
-	        	 case 1:ctx.transform(1, 0, 0, 1, 0, 0);break;
+	        	 
 	        	 case 2:ctx.transform(-1, 0, 0, 1, width, 0);;break;
 	        	 case 3:ctx.transform(-1, 0, 0, -1, width, height );break;
 	        	 case 4:ctx.transform(1, 0, 0, -1, 0, height );;break;
@@ -240,6 +241,8 @@ function changeText(top_text,bottom_text){
 	        	 case 8:ctx.transform(0, -1, 1, 0, 0, width);break;
 
 	        }
+	    }else {
+	    	var center = img.width/2;
 	    }
 
 	    ctx.drawImage(img,0,0);
