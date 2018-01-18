@@ -251,7 +251,7 @@ function compareTime(a, b) {
 
 function loadComments(elem){
 
-	var parent = elem.parentElement.parentElement.cloneNode(true);
+	var parent = elem.parentElement.parentElement.parentElement.cloneNode(true);
 	console.log(parent);
 
 	localStorage.setItem('post_div', parent.outerHTML);

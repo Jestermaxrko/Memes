@@ -186,6 +186,8 @@ function displayComments(){
 
 function loadWindow(){
 	var div = document.getElementById("t");
+
+	console.log(localStorage.getItem("post_div"));
 	div.outerHTML = localStorage.getItem("post_div");
 	var com = document.getElementsByClassName("comment")[0];
 	com.style.display="none";
