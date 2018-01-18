@@ -1,7 +1,7 @@
 
 initFirebase();
 window.onload = loadWindow;
-checkUserIsSignIn();
+
 var current_user;
 var post_id;
 var comments = [];
@@ -39,7 +39,7 @@ function checkUserIsSignIn(){
   		} 
   		else {
     		
-    		getComments();
+    			getComments();
 	  	}
 	});
 }
@@ -52,6 +52,8 @@ function getComments(){
 	base_feed.innerHTML = "";
 	if(feed) feed.innerHTML ="";
 
+	console.log(post_id);
+
 	firebase.database().ref("/posts/"+post_id+"/comments").once('value').then(function(snapshot){
 				var tmp_comments = snapshot.val();
 
@@ -60,6 +62,8 @@ function getComments(){
 					tmp_comments[key].id = key;
 					comments.push(tmp_comments[key]);
 				}		
+
+				console.log(comments);
 				comments.sort(compareTime);
 				displayComments();
   	});
@@ -137,11 +141,16 @@ function displayComments(){
 	var user_comment_div =  document.createElement("div");
 	var text_area = document.createElement("textarea");
 	var send_btn = document.createElement("a");
+	var log_btn = document.createElement("a");
 	
 	user_comment_div.classList.add("user_comment_div");
 	text_area.classList.add("text_area");
 	text_area.id = "text";
 	send_btn.classList.add("send_btn");
+	log_btn.classList.add("log_btn");
+	log_btn.href ="login.html";
+	log_btn.target ="_blanc";
+	log_btn.innerHTML = "Log in to leave a comment";
 	send_btn.innerHTML = "SEND";
 	send_btn.setAttribute("onclick","addComment()");
 	
@@ -149,6 +158,7 @@ function displayComments(){
 	user_comment_div.appendChild(send_btn);
 
 	comments_feed.appendChild(user_comment_div);
+	comments_feed.appendChild(log_btn);
 
 	base_feed.appendChild(comments_feed);
 
@@ -157,10 +167,18 @@ function displayComments(){
 	if(wrapper_height>200) comments_wraper.style.height = "200px";
 
 	send_btn.id = "scr";
-
 	
 	comments_wraper.scrollTop = comments_wraper.scrollHeight;
 	send_btn.scrollIntoView();
+
+	if(!current_user){
+		user_comment_div.style.display="none";
+		log_btn.style.display="";
+	}else {
+		user_comment_div.style.display="";
+		log_btn.style.display="none";
+	}
+	
 
 
 }
@@ -172,6 +190,8 @@ function loadWindow(){
 	var com = document.getElementsByClassName("comment")[0];
 	com.style.display="none";
 	post_id = com.getAttribute("post_id");
+
+	checkUserIsSignIn();
 
 }
 
