@@ -99,16 +99,18 @@ function findExif(){
 
 }
 
-function loadToCanvas(orientation){
+function loadToCanvas(orientation,file2){
 
 	console.log(orientation);
 
-	var file = document.getElementById("file").files[0];
+	if(!file)
+		var file = document.getElementById("file").files[0];
+	else 
+		var file = file2;
 
 	var fr = new FileReader();
 	fr.onload = createImage;   // onload fires after reading is complete
 	fr.readAsDataURL(file);    // begin reading
-	
 
 	 function createImage() {
         img = new Image();
@@ -127,6 +129,7 @@ function loadToCanvas(orientation){
         adaptFontSizes();
         ctx = canvas.getContext("2d");
 
+        ctx.save();
         if(orientation){
 
         	if (4 < orientation && orientation < 9) {
@@ -152,11 +155,41 @@ function loadToCanvas(orientation){
 	    }
 
         ctx.drawImage(img,0,0);
+        ctx.restore();
+
+        var dataURL = canvas.toDataURL();
+
+
+        if(!file2)
+        	loadToCanvas(null,dataURItoBlob(dataURL));
+
 
         document.getElementById("editor").style.display ="";
         document.getElementById("save_btn").style.display="";
        
     }
+}
+
+
+
+function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+    var byteString;
+    if (dataURI.split(',')[0].indexOf('base64') >= 0)
+        byteString = atob(dataURI.split(',')[1]);
+    else
+        byteString = unescape(dataURI.split(',')[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+    // write the bytes of the string to a typed array
+    var ia = new Uint8Array(byteString.length);
+    for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    return new Blob([ia], {type:mimeString});
 }
 
 
@@ -205,7 +238,7 @@ function changeText(top_text,bottom_text){
 
 	//var canvas = document.getElementById("myCanvas");
 	//var ctx = canvas.getContext("2d");
-	ctx.clearRect ( 0 , 0 , 300 , 300 );
+	//ctx.clearRect ( 0 , 0 , 300 , 300 );
 	ctx.drawImage(img,0,0);
 
 	
@@ -224,14 +257,6 @@ function changeText(top_text,bottom_text){
 	wrapText(ctx, top_text, center, font_size, img.width, font_size,1);
 
 	wrapText(ctx, bottom_text, center, img.height-5, img.width, font_size,0);
-
-	/*ctx.fillText(top_text,center,font_size);
-    ctx.strokeText(top_text, center, font_size);
-
-   
-
-    ctx.fillText(bottom_text,center,img.height-5);
-    ctx.strokeText(bottom_text, center, img.height-5);*/
 }
 
 function adaptFontSizes(){
