@@ -98,6 +98,7 @@ function displayPosts(){
 		var rating_text = document.createElement("span");
 		var author = document.createElement("span");
 		var comment = document.createElement("a");
+		var div = document.createElement('div');
 
 		post_div.classList.add("post");
 		post_title.classList.add("post_name");
@@ -131,10 +132,16 @@ function displayPosts(){
 		//TMP attributes///////////////
 		//post_div.setAttribute("onclick","copyDiv(this)");
 
-		post_stats_div.appendChild(rating_text);
+
+
+
+		div.appendChild(rating_text);
+		div.appendChild(comment);
+
+		post_stats_div.appendChild(div);
+
 		post_stats_div.appendChild(like_btn);
 		post_stats_div.appendChild(dislike_btn);
-		post_stats_div.appendChild(comment);
 		post_stats_div.appendChild(author);
 
 		post_div.appendChild(post_title);
