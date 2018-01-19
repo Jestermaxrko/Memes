@@ -120,6 +120,11 @@ function loadToCanvas(orien){
 
 		canvas.width = img.width;
 		canvas.height = img.height;
+
+		console.log("canvas h :" + canvas.height );
+		console.log("canvas w :" + canvas.width );
+
+
 		ctx.drawImage(img,0,0);
 		adaptFontSizes();
 	}
@@ -132,6 +137,9 @@ function loadToCanvas(orien){
 
     function imageLoaded() {
 
+
+    	console.log("img 2: " + hidden_img.width);
+    	console.log("img h: " + hidden_img.height);
     	var width = hidden_img.width;
         var height = hidden_img.height;
         
@@ -148,7 +156,8 @@ function loadToCanvas(orien){
    			 	hidden_canvas.height = height;
       			
     		}
-    	
+    		
+
 	        switch(orientation){
 	        	 
 	        	 case 2:hidden_ctx.transform(-1, 0, 0, 1, width, 0);;break;
@@ -160,7 +169,14 @@ function loadToCanvas(orien){
 	        	 case 8:hidden_ctx.transform(0, -1, 1, 0, 0, width);break;
 
 	        }
+	    }else {
+
+	    	hidden_canvas.width = width;
+     		hidden_canvas.height = height;
 	    }
+
+	    console.log("hidden canvas h :" + hidden_canvas.height );
+		console.log("hidden canvas w :" + hidden_canvas.width );
 
 	    hidden_ctx.drawImage(hidden_img,0,0);
 
