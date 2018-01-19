@@ -134,6 +134,8 @@ function loadToCanvas(orien){
         hidden_img = new Image();
         hidden_img.onload = imageLoaded;
         hidden_img.src = fr.result;
+
+        alert(new JpegMeta.JpegFile(this.result, file.name));
    	}
 
     function imageLoaded() {
