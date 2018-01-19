@@ -12,6 +12,7 @@ var ctx;
 initFirebase();
 checkUserIsSignIn();
 
+//var ref = new Firebase('application.firebaseio.com/posts');
 
 
 
@@ -89,108 +90,43 @@ function uploadImage (title) {
 }
 
 
+function updateResults (img_canvas, data) {
+    
+    var data_URL = img_canvas.toDataURL();
 
-function findExif(){
-
-	var file = document.getElementById("file").files[0];
-	EXIF.getData(file, function () {
-		 loadToCanvas(this.exifdata.Orientation);
-	});
-
-}
-
-function loadToCanvas(orien){
-
-	orientation = orien;
-	window.alert(orientation);
-	var dataURL;
-	img = new Image();
-	var file = document.getElementById("file").files[0];
-	var fr = new FileReader();
-	fr.onload = createImage;      // onload fires after reading is complete
-	fr.readAsDataURL(file);      // begin reading
-	
-	var hidden_canvas = document.getElementById("hiddenCanvas");
-	var hidden_ctx = hidden_canvas.getContext("2d");
-
-	var canvas = document.getElementById("baseCanvas");
+    var canvas = document.getElementById("baseCanvas");
 	ctx = canvas.getContext("2d");
-
+	img = new Image();
 
 	img.onload = function(){
-
+		adaptFontSizes();
 		canvas.width = img.width;
 		canvas.height = img.height;
-
-		console.log("canvas h :" + canvas.height );
-		console.log("canvas w :" + canvas.width );
-
-
 		ctx.drawImage(img,0,0);
-		adaptFontSizes();
 	}
-   
-	function createImage() {
-        hidden_img = new Image();
-        hidden_img.onload = imageLoaded;
-        hidden_img.src = fr.result;
 
-        alert(new JpegMeta.JpegFile(this.result, file.name));
-   	}
+	img.src = data_URL;
 
-    function imageLoaded() {
+	document.getElementById("editor").style.display ="";
+   	document.getElementById("save_btn").style.display="";
+
+  }
 
 
-    	console.log("img 2: " + hidden_img.width);
-    	console.log("img h: " + hidden_img.height);
-    	var width = hidden_img.width;
-        var height = hidden_img.height;
+function loadToCanvas(){
 
-        var hidden_ctx = hidden_canvas.getContext("2d");
-        
-        ///adaptFontSizes();
-        if(orientation){
-        	if (4 < orientation && orientation < 9) {
-      			hidden_canvas.width = height;
-     			hidden_canvas.height = width;
-     			
+	var file =  document.getElementById("file").files[0];
 
-   			 } 
-   			 else {
-   			 	hidden_canvas.width = width;
-   			 	hidden_canvas.height = height;
-      			
-    		}
-    
-	        switch(orientation){
-	        	 
-	        	 case 2:hidden_ctx.transform(-1, 0, 0, 1, width, 0);;break;
-	        	 case 3:hidden_ctx.transform(-1, 0, 0, -1, width, height );break;
-	        	 case 4:hidden_ctx.transform(1, 0, 0, -1, 0, height );;break;
-	        	 case 5:hidden_ctx.transform(0, 1, 1, 0, 0, 0);break;
-	        	 case 6:hidden_ctx.transform(0, 1, -1, 0, height , 0);break;
-	        	 case 7:hidden_ctx.transform(0, -1, -1, 0, height , width);break;
-	        	 case 8:hidden_ctx.transform(0, -1, 1, 0, 0, width);break;
+	var options = {
+      canvas: true,
+      orientation: true
+    };
 
-	        }
-	    }else {
-
-	    	hidden_canvas.width = width;
-     		hidden_canvas.height = height;
-	    }
-
-	    console.log("hidden canvas h :" + hidden_canvas.height );
-		console.log("hidden canvas w :" + hidden_canvas.width );
-
-	    hidden_ctx.drawImage(hidden_img,0,0);
-
-	    dataURL = hidden_canvas.toDataURL();
-        img.src = dataURL;
-
-        document.getElementById("editor").style.display ="";
-        document.getElementById("save_btn").style.display="";
-       
-    }
+     loadImage(
+      file,
+      updateResults,
+      options
+    ) ;
 }
 
 
