@@ -132,10 +132,6 @@ function loadToCanvas(orien){
 
     	var width = hidden_img.width;
         var height = hidden_img.height;
-
-        hidden_canvas.width = width;
-        hidden_canvas.height = height;
-   
         
         ///adaptFontSizes();
         if(orientation){
@@ -147,6 +143,8 @@ function loadToCanvas(orien){
 
    			 } 
    			 else {
+   			 	hidden_canvas.width = width;
+   			 	hidden_canvas.height = height;
       			canvas.width = width;
       			canvas.height = height;
     		}
