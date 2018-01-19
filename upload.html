@@ -6,20 +6,24 @@
 	<link rel="stylesheet" type="text/css" href="styles/upload.css">
 	<script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
 	<script type="text/javascript"  src="scripts/jquery-3.2.1.min.js"></script>
-	<script src="scripts/jpegmeta.js"></script>
-	<script type="text/javascript" src="scripts/exif.js"></script>
+	<script src="scripts/load-image.all.min.js"></script>
+
+	
+
 	<script defer type="text/javascript" src="scripts/upload.js"></script>
 
 
 </head>
 <body>
 	<div class="container">
+
+
 		
 		<form>
 
 			<div class="load_img">
 				<input type="text"  id="title_post" placeholder="title">
-				<input type="file"  id="file" placeholder="image" onchange="findExif()">
+				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()">
 				<br>	
 			</div>
 
@@ -56,8 +60,6 @@
 					<input type="text" id="top" class="text_input" onkeyup="changeText(this.value,bottom.value)" placeholder="top text">
 
 					<canvas id="baseCanvas"></canvas>
-
-					<canvas id="hiddenCanvas"></canvas>
 
 					<input type="text" id="bottom" class="text_input" onkeyup="changeText(top.value,this.value)" placeholder="bottom text">
 				</div>
