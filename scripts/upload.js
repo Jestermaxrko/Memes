@@ -118,6 +118,8 @@ function loadToCanvas(orien){
 
 	img.onload = function(){
 
+		canvas.width = img.width;
+		canvas.height = img.height;
 		ctx.drawImage(img,0,0);
 		adaptFontSizes();
 	}
@@ -138,15 +140,13 @@ function loadToCanvas(orien){
         	if (4 < orientation && orientation < 9) {
       			hidden_canvas.width = height;
      			hidden_canvas.height = width;
-     			canvas.width = height;
-     			canvas.height = width;
+     			
 
    			 } 
    			 else {
    			 	hidden_canvas.width = width;
    			 	hidden_canvas.height = height;
-      			canvas.width = width;
-      			canvas.height = height;
+      			
     		}
     	
 	        switch(orientation){
