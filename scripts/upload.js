@@ -102,6 +102,7 @@ function findExif(){
 function loadToCanvas(orien){
 
 	orientation = orien;
+	window.alert(orientation);
 	var dataURL;
 	img = new Image();
 	var file = document.getElementById("file").files[0];
@@ -142,6 +143,8 @@ function loadToCanvas(orien){
     	console.log("img h: " + hidden_img.height);
     	var width = hidden_img.width;
         var height = hidden_img.height;
+
+        var hidden_ctx = hidden_canvas.getContext("2d");
         
         ///adaptFontSizes();
         if(orientation){
@@ -156,8 +159,7 @@ function loadToCanvas(orien){
    			 	hidden_canvas.height = height;
       			
     		}
-    		
-
+    
 	        switch(orientation){
 	        	 
 	        	 case 2:hidden_ctx.transform(-1, 0, 0, 1, width, 0);;break;
