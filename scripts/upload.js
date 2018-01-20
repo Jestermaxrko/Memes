@@ -71,6 +71,10 @@ function getTemplates(){
 
 function displayTemplates(templates){
 
+	var loading = document.getElementById("loading");
+	console.log( document.getElementById("form").clientWidth);
+	loading.style.width =   document.getElementById("form").offsetWidth + "px";
+	
 	var table = document.getElementById("table");
 	var cols = 3;
 	var rows = templates.length /3;
@@ -129,11 +133,15 @@ function uploadImage (title) {
 
 		const ref = firebase.storage().ref();
 		var image = new Image();
-		image.src  = document.getElementById("baseCanvas").toDataURL();
+		//image.src  = document.getElementById("baseCanvas").toDataURL();
 		const file = document.querySelector('#file').files[0];
 
 		
-		if(title){
+		if(title && (image || file)){
+
+
+			document.getElementById("loading").style.display = "";
+			document.getElementById("container").style.opacity = "0.5"
 
  			var name;
 			if(file){
@@ -165,6 +173,27 @@ function uploadImage (title) {
 			});	
 
 			
+		}else{
+				
+			if(!title){
+
+
+				var title_input = document.getElementById("title_post");
+				title_input.scrollIntoView();
+
+				
+
+				title_input.style.borderBottom = "2px solid red";
+				title_input.style.backgroundColor = "#ffc9c9";
+
+				setTimeout(function(){
+
+					title_input.style.borderBottom = "";
+					title_input.style.backgroundColor =  "";
+
+				},1000);
+
+			}
 		}
 	}
 }
@@ -286,8 +315,8 @@ function adaptFontSizes(){
 	if(font_size>60)
 		stroke_size =3;
 
-    document.getElementById("font_size").value = font_size;
-    document.getElementById("stroke").value = stroke_size;
+    document.getElementById("font_size").value = parseInt(font_size);
+    document.getElementById("stroke").value = parseInt(stroke_size);
 
     text_color = (document.getElementById("text_color").value);
 	stroke_color = (document.getElementById("stroke_color").value);
