@@ -2,6 +2,11 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 
+
+.container{
+
+}
+
 form {
 	width: 30%;
 	margin: auto;
@@ -26,21 +31,6 @@ span {
 	padding: 5px 10px;
 	width: 100%;
 	box-sizing: border-box;
-}
-
-#title_post {
-
-	font-weight:  bold;
-	border-radius: 10px;
-	border:none;
-	outline: 0;
-	border:2px solid #3d7e82;
-	padding: 10px 5px;
-	width: 100%;
-	box-sizing: border-box;
-	font-size: 1.1em;
-	font-family: 'PT Sans', sans-serif;
-
 }
 
 
@@ -167,7 +157,10 @@ input[type="color"]::-webkit-color-swatch {
 	width:60px;
 }
 
-.text_input {
+
+
+
+input[type="text"] {
 	border-radius: 0;
 	margin-bottom: 5px;
 	padding: 10px 0px;
@@ -180,6 +173,14 @@ input[type="color"]::-webkit-color-swatch {
 	font-size: 1.1em;
 	font-family: 'PT Sans', sans-serif;
 }
+
+
+input[type="text"]:focus {
+
+	border-bottom: 2px #8ebde2 solid;
+}
+
+
 
 canvas{
 	width: 100%;
@@ -201,6 +202,20 @@ canvas{
 }
 
 
+.loading{
+		position: absolute;
+		top:200px;
+		border:2px solid #4f4f4f;
+		box-shadow: 0 0 10px rgba(0,0,0,0.5);
+		text-align: center;
+		color:white;
+		background-color: #636363;
+		border-radius: 5px;
+}
+
+.loading h1{
+	
+}
 
 
 @media only screen and (max-width: 1100px){
