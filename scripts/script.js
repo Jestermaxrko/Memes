@@ -2,6 +2,24 @@
 var current_user;
 var posts = [];
 
+
+
+$(window).scroll( function() { 
+ var scrolled_val = $(document).scrollTop().valueOf();
+
+
+ if(scrolled_val > 400){
+
+ 	document.getElementById("top_btn").style.display="";
+ }else {
+
+ 	document.getElementById("top_btn").style.display="none";
+ }
+
+});
+
+
+
 initFirebase();
 checkUserIsSignIn();
 //signIn();
@@ -192,9 +210,11 @@ function displayPosts(){
 
 function loadLikeState(elem,action) {
 
+	
 	if(current_user){
 		console.log(elem.id);
 		var post_id = elem.id; 
+
 
 		firebase.database().ref('/posts/'+post_id+'/likes/'+current_user.uid).once('value').then(function(snapshot) {
 	  		var like_state = snapshot.val();
@@ -311,3 +331,5 @@ function loadComments(elem){
 
 
 }
+
+
