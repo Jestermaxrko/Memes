@@ -10,6 +10,7 @@ var ctx;
 var is_temp_open = false;
 
 
+
 initFirebase();
 checkUserIsSignIn();
 
@@ -38,7 +39,9 @@ function checkUserIsSignIn(){
 
   			firebase.database().ref("/users/"+user.uid).once('value').then(function(snapshot){
 				current_user = snapshot.val();
+				//loadTemplates();
 				getTemplates();
+
 
   			});
   		} 
@@ -104,8 +107,7 @@ function loadTemplteToCanvas(elem){
 	 var canvas = document.getElementById("baseCanvas");
 	 canvas.scrollIntoView();
 	 ctx = canvas.getContext("2d");
-	 img = new Image();
-
+	 img = document.createElement("img");
 
 	 img.onload = function(){
 		adaptFontSizes();
@@ -128,16 +130,21 @@ function uploadImage (title) {
 
 		const ref = firebase.storage().ref();
 		var image = new Image();
-		image.src = document.getElementById("baseCanvas").toDataURL();
+		image.src  = document.getElementById("baseCanvas").toDataURL();
 		
 
 		const file = document.querySelector('#file').files[0];
 		
-		if(title && file){
+		if(title && image){
 
-			const name = (+new Date()) + '-' + file.name;
-			const metadata = { contentType: file.type };
-			var task;// = ref.child(name).put(file, metadata);
+			if(file){
+				const name = (+new Date()) + '-' + file.name;
+				const metadata = { contentType: file.type };
+				var task;// = ref.child(name).put(file, metadata);
+			}else {
+
+				const name = (+new Date())+ image.src;
+			}
 
 			console.log(name);
 
@@ -325,3 +332,6 @@ function showHideTemp(event){
 	}
 
 }
+
+
+
