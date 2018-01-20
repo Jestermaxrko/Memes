@@ -131,19 +131,19 @@ function uploadImage (title) {
 		var image = new Image();
 		image.src  = document.getElementById("baseCanvas").toDataURL();
 		const file = document.querySelector('#file').files[0];
+
 		
 		if(title){
 
- 			/*var name;
+ 			var name;
 			if(file){
 				name = (+new Date()) + '-' + file.name;
 			}
 
-			if(image) {
-				name = (+new Date());
-			}*/
+			else {
+				name = (+new Date()) + Math.floor((Math.random() * 10000000) + 100) + "X";
+			}
 
-			var name = (+new Date()) +"dsdsad";
 			console.log(name);
 
 			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
