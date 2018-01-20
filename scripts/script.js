@@ -126,7 +126,7 @@ function displayPosts(){
 		like_btn.id=posts[i].id;
 		dislike_btn.id=posts[i].id;
 		author.id = posts[i].author;
-		author.innerHTML = "Author : " + posts[i].author_name;
+		author.innerHTML = posts[i].author_name;
 		//comment.href = "comment.html";
 		comment.setAttribute("post_id",posts[i].id+"");
 		comment.innerHTML = "Comments (" +posts[i].coments_count+ ")";
