@@ -7,6 +7,7 @@ var stroke_color;
 var stroke_size;
 var orientation;
 var ctx;
+var is_temp_open = false;
 
 
 initFirebase();
@@ -37,6 +38,8 @@ function checkUserIsSignIn(){
 
   			firebase.database().ref("/users/"+user.uid).once('value').then(function(snapshot){
 				current_user = snapshot.val();
+				getTemplates();
+
   			});
   		} 
   		else {
@@ -46,15 +49,87 @@ function checkUserIsSignIn(){
 }
 
 
+function getTemplates(){
+
+	firebase.database().ref("/templates/").once('value').then(function(snapshot){
+		
+		var templates_tmp = snapshot.val();
+		var templates = [];
+
+		for(var key in templates_tmp){
+			templates_tmp[key].id = key;
+			templates.push(templates_tmp[key]);
+		}
+
+		displayTemplates(templates);
+
+	});
+}
+
+
+function displayTemplates(templates){
+
+	var table = document.getElementById("table");
+	var cols = 3;
+	var rows = templates.length /3;
+	var tmp_count =0;
+
+	for(var i = 0; i < rows; i++) {
+		var row = table.insertRow(i);
+		for(var j=0;j<cols;j++){
+
+			if(tmp_count > templates.length-1){
+				return;
+			}
+
+			var cell = row.insertCell(j);
+			cell.setAttribute("onclick","loadTemplteToCanvas(this)");
+			var img = document.createElement("img")
+			img.src = templates[tmp_count++].url;		
+			img.classList.add("temp_img");
+			cell.appendChild(img);
+
+
+		}
+	}
+}
+
+
+function loadTemplteToCanvas(elem){
+	
+	showHideTemp();
+
+
+
+	 var canvas = document.getElementById("baseCanvas");
+	 canvas.scrollIntoView();
+	 ctx = canvas.getContext("2d");
+	 img = new Image();
+
+
+	 img.onload = function(){
+		adaptFontSizes();
+		canvas.width = img.width;
+		canvas.height = img.height;
+		ctx.drawImage(img,0,0);
+	}
+
+	img.src = elem.children[0].src;
+
+	document.getElementById("editor").style.display ="";
+   	document.getElementById("save_btn").style.display="";
+
+}
+
+
 function uploadImage (title) {
 
 	if(current_user){
 
 		const ref = firebase.storage().ref();
 		var image = new Image();
-		image.src = document.getElementById("myCanvas").toDataURL();
+		image.src = document.getElementById("baseCanvas").toDataURL();
 		
-
 
 		const file = document.querySelector('#file').files[0];
 		
@@ -88,6 +163,7 @@ function uploadImage (title) {
 		}
 	}
 }
+
 
 
 function updateResults (img_canvas, data) {
@@ -197,20 +273,55 @@ function changeText(top_text,bottom_text){
 
 function adaptFontSizes(){
 
-	font_size = img.width/12;
-	stroke_size = 2;
+	font_size = img.width/15;
+	stroke_size = font_size/20;
+
+	if(font_size>30)
+		stroke_size = 2;
+	if(font_size>60)
+		stroke_size =3;
 
     document.getElementById("font_size").value = font_size;
+    document.getElementById("stroke").value = stroke_size;
+
     text_color = (document.getElementById("text_color").value);
 	stroke_color = (document.getElementById("stroke_color").value);
 
 }
 
 function setDrawStyles(){
+
+
 	font_size = (+document.getElementById("font_size").value);
+	stroke_size = (document.getElementById("stroke").value);
 	text_color = (document.getElementById("text_color").value);
 	stroke_color = (document.getElementById("stroke_color").value);
 
+
 	changeText(document.getElementById("top").value,document.getElementById("bottom").value)
 	
+}
+
+
+function showHideTemp(event){
+
+	if(event)
+		event.stopPropagation();
+
+	
+
+	var arrow_img = document.getElementById("arrow");
+	var table = document.getElementById("table_continer"); 
+
+	if(is_temp_open){
+		arrow.src = "images/arrow_bottom.png";
+		table.style.display = "none";
+		is_temp_open = false;
+	}
+	else{
+		arrow.src = "images/arrow_top.png";
+		table.style.display = "";
+		is_temp_open = true;
+	}
+
 }
