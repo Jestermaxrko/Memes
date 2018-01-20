@@ -10,7 +10,6 @@ var ctx;
 var is_temp_open = false;
 
 
-
 initFirebase();
 checkUserIsSignIn();
 
@@ -131,21 +130,20 @@ function uploadImage (title) {
 		const ref = firebase.storage().ref();
 		var image = new Image();
 		image.src  = document.getElementById("baseCanvas").toDataURL();
-		
-
 		const file = document.querySelector('#file').files[0];
 		
-		if(title && image){
+		if(title){
 
+ 			/*var name;
 			if(file){
-				const name = (+new Date()) + '-' + file.name;
-				const metadata = { contentType: file.type };
-				var task;// = ref.child(name).put(file, metadata);
-			}else {
-
-				const name = (+new Date())+ image.src;
+				name = (+new Date()) + '-' + file.name;
 			}
 
+			if(image) {
+				name = (+new Date());
+			}*/
+
+			var name = (+new Date());
 			console.log(name);
 
 			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
