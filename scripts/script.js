@@ -93,12 +93,16 @@ function displayPosts(){
 		var post_title = document.createElement("h3");
 		var post_img = document.createElement("img");
 		var post_stats_div = document.createElement("div");
-		var like_btn = document.createElement("a");
-		var dislike_btn = document.createElement("a");
+		var like_btn = document.createElement("input");
+		var dislike_btn = document.createElement("input");
 		var rating_text = document.createElement("span");
 		var author = document.createElement("span");
 		var comment = document.createElement("a");
 		var div = document.createElement('div');
+
+
+		like_btn.type = "button";
+		dislike_btn.type = "button";
 
 		post_div.classList.add("post");
 		post_title.classList.add("post_name");
@@ -106,9 +110,14 @@ function displayPosts(){
 		post_stats_div.classList.add("post_stats");
 		like_btn.classList.add("button");
 		dislike_btn.classList.add("button");
+		like_btn.classList.add("like_btn");
+		dislike_btn.classList.add("dislike_btn");
 		rating_text.classList.add("rating");
 		author.classList.add("author");
 		comment.classList.add("comment");
+
+		like_btn.value="";
+		dislike_btn.value="";
 
 		post_title.innerHTML = posts[i].name;
 		post_img.src = posts[i].url;
@@ -120,9 +129,8 @@ function displayPosts(){
 		author.innerHTML = "Author : " + posts[i].author_name;
 		//comment.href = "comment.html";
 		comment.setAttribute("post_id",posts[i].id+"");
-		comment.innerHTML = "Comments";
-		like_btn.innerHTML = "LIKE";
-		dislike_btn.innerHTML = "DISLIKE";
+		comment.innerHTML = "Comments (" +posts[i].coments_count+ ")";
+	
 
 		like_btn.setAttribute("onclick","loadLikeState(this,1)");
 		dislike_btn.setAttribute("onclick","loadLikeState(this,-1)");
@@ -136,12 +144,13 @@ function displayPosts(){
 
 
 		div.appendChild(rating_text);
-		div.appendChild(comment);
+		//div.appendChild(comment);
 
 		post_stats_div.appendChild(div);
 
 		post_stats_div.appendChild(like_btn);
 		post_stats_div.appendChild(dislike_btn);
+		post_stats_div.appendChild(comment);
 		post_stats_div.appendChild(author);
 
 		post_div.appendChild(post_title);
@@ -154,9 +163,6 @@ function displayPosts(){
 		feed.appendChild(post_div);
 
 
-
-		console.log("feed : " +feed.offsetWidth );
-		console.log("img : " +post_img.naturalWidth );
 
 		
 
@@ -251,7 +257,7 @@ function compareTime(a, b) {
 
 function loadComments(elem){
 
-	var parent = elem.parentElement.parentElement.parentElement.cloneNode(true);
+	var parent = elem.parentElement.parentElement.cloneNode(true);
 	console.log(parent);
 
 	localStorage.setItem('post_div', parent.outerHTML);

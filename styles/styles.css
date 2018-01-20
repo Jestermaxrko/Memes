@@ -1,39 +1,48 @@
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+
+
+body {
+	background-color: #466065;
+}
+
 .container {
+	background-color: white;
 	width: 40%;
 	margin: auto;
 	border:2px solid #ccc;
 	font-family: 'Open Sans', sans-serif;
+	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 
-header {
-	border-bottom: 2px solid #ccc;
-	padding: 10px 0;
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #466065;
 }
 
-header ul {
-	list-style: none;
-	margin:auto;
-	width: 50%;
-	padding: 0;
-	display: block;
-	text-align: center;
-}
-header ul li {
-	display: inline-block;
+li {
+    float: left;
 }
 
-header ul li a {
-	padding: 5px 10px;
-	background-color: #ccc;
-	border-radius: 5px;
-	text-decoration: none;
-	color:white;
-	font-weight: bold;
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
 
+/* Change the link color to #111 (black) on hover */
+li a:hover, li a:focus {
+    background-color: #303d40;
+    outline: 0;
 }
 
 #feed {
@@ -67,12 +76,36 @@ header ul li a {
 }
 
 .button {
+	/*background-color: white;*/
 	padding: 5px 10px;
 	border-radius: 4px;
 	border:2px solid #ccc;
 	margin-right: 5px;
+	outline: none;
+	
+	width: 50px;
+	height: 40px;
+}
+
+
+.button:focus{
+		
+		border:2px solid #7ea5e5;
 
 }
+
+.like_btn{
+
+	background:url("../images/like.png") no-repeat center;
+}
+
+
+.dislike_btn{
+
+	background:url("../images/dislike.png") no-repeat center;
+}
+
+
 
 .button:hover {
 	cursor: pointer;
@@ -81,6 +114,7 @@ header ul li a {
 
 .active_btn {
 	background-color: #ccc;
+
 }
 
 .active_btn:hover {
@@ -145,8 +179,19 @@ header ul li a {
 		width: 100%;
 		margin-bottom: 10px;
 		box-sizing: border-box;
-		padding: 0px 5px;
+		padding: 0;
+		margin: 2px;s
 
 	}
+
+	.comment,.author{
+		font-size: 0.7em;
+	}
+
+	.author{
+		bottom:13px;
+	}
+
+
 
 } 

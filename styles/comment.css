@@ -51,18 +51,34 @@
 	width: 100%;
 	box-sizing: border-box;
 	outline: 0;
+	resize: none;
+	height: 100px;
 }
 
-.send_btn{
+.send_btn,.log_btn {
 	width: 100%;
 	display: block;
-	margin-top: 10px;
+	margin-top:5px; 
 	text-align: center;
+	color: white;
+	background-color: #74ce55;
+	padding: 10px;
 	box-sizing: border-box;
-	border:1px solid #ccc;
+	outline: 0;
+	border:0;
+	text-decoration: none;
+
 }
 
-.send_btn:hover{
+.send_btn:hover,.log_btn:hover {
+
+	opacity: 0.7;
 	cursor: pointer;
-	background-color: #eee;
+}
+
+
+.send_btn:focus,.log_btn:focus {
+
+	opacity: 0.7;
+	cursor: pointer;
 }

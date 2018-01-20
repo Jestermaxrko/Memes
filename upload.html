@@ -22,7 +22,7 @@
 
 			<div class="load_img">
 				<input type="text"  id="title_post" placeholder="Title">
-				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()" accept="image/jpg, image/jpeg , image/png ,image/bmp">
+				<input type="file"  id="file" name = "file" placeholder="image" onchange="loadToCanvas()" accept="image/jpg, image/jpeg , image/png ,image/bmp"  tabindex="-1">
 				<br>	
 			</div>
 
@@ -32,11 +32,11 @@
 
 			<div class="temp_tittle" onclick="showHideTemp(event)">
 				<h3 class="display_inline">Templates</h3>
-				<div class="display_inline"> <img src="images/arrow_bottom.png" id="arrow" onclick="showHideTemp(event)" > </div>
+				<div class="display_inline"> <img src="images/arrow_top.png" id="arrow" onclick="showHideTemp(event)" > </div>
 			</div>
 			
 
-			<div class="table_continer" id="table_continer"  style="display: none">
+			<div class="table_continer" id="table_continer">
 				<table id ="table"> 
 
 				
@@ -60,7 +60,7 @@
 							</div>
 
 							<div class="right-item display_inline"> 
-								<input type="number" class="font_list" id="font_size" onchange="setDrawStyles()" />
+								<input type="number" class="font_list" id="font_size" onchange="setDrawStyles()"  tabindex="-1"/>
 							</div>
 
 						</div>
@@ -72,7 +72,7 @@
 							</div>
 
 							<div class="right-item display_inline">
-								<input type="number" class="font_list" id="stroke" onchange="setDrawStyles()" />
+								<input type="number" class="font_list" id="stroke" onchange="setDrawStyles()"  tabindex="-1"/>
 							 </div>
 
 
@@ -89,7 +89,7 @@
 								<span>Text Color : </span>
 							</div>
 							<div class="right-item display_inline">
-								<input type="color" name="" id="text_color" value="#ffffff" onchange="setDrawStyles()"/>
+								<input type="color" name="" id="text_color" value="#ffffff" onchange="setDrawStyles()"  tabindex="-1"/>
 							 </div>
 
 						</div>
@@ -101,7 +101,7 @@
 							</div>
 
 							<div class="right-item display_inline">
-								<input type="color"  id="stroke_color" name="" onchange="setDrawStyles()"/>
+								<input type="color"  id="stroke_color" name="" onchange="setDrawStyles()"  tabindex="-1"/>
 							</div>
 
 							
@@ -129,7 +129,7 @@
 			</div>
 
 
-			<a  id ="save_btn" onclick="uploadImage(title_post.value)" style="display: none;">Save</a>
+			<input type="button" id ="save_btn" onclick="uploadImage(title_post.value)" style="display: none;" value="Save">
 		</form>
 
 

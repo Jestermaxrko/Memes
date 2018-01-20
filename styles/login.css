@@ -1,26 +1,62 @@
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+body{
+
+	background-color: #466065;
+	font-family: 'Open Sans', sans-serif;
+}
+
 form {
 	width: 30%;
 	margin: auto;
 	text-align: center;
+
 }
 
-input,a {
+input[type="text"],input[type="password"] {
 	display: block;
-	margin: 10px 0;
-	padding: 5px 10px;
+	padding: 15px 5px;
 	width: 100%;
 	box-sizing: border-box;
+	outline: 0;
+	border:none;
+	border:1px solid #ccc;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: bold;
+	color:#7a7979;
 }
 
-a{
-	background-color: #ccc;
+input[type="button"]{	
+	display: block;
+	box-sizing: border-box;
+	margin-top: 20px;
+	width: 100%;
+	padding: 10px 5px;
+	border-radius: 4px;
+	background-color: #74ce55;
+	color:white;
+	border:none;
+	outline: 0;
+	font-size: 1em;
 }
 
-a:hover{
+#login{
+
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px; 
+}
+
+#pass{
+	border-top: none;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px; 
+}
+
+input[type="button"]:hover,input[type="button"]:focus{
 
 	cursor: pointer;
-	background-color: #ddd;
+	opacity: 0.7
 }
 
 

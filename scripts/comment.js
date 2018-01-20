@@ -87,6 +87,17 @@ function addComment(){
 			  	
 		firebase.database().ref('posts/'+post_id+"/comments/").push(new_comment).then(function(){
 			
+
+				firebase.database().ref('posts/'+post_id+"/coments_count").once("value").then(function(snapshot){	
+					
+					var com_count = snapshot.val();
+					com_count++;
+
+					var updates_coments = {};
+			  		updates_coments['/posts/' + post_id+"/coments_count"] = com_count;
+			  		firebase.database().ref().update(updates_coments);
+				});
+
 			getComments();
 
 		});
@@ -140,18 +151,22 @@ function displayComments(){
 
 	var user_comment_div =  document.createElement("div");
 	var text_area = document.createElement("textarea");
-	var send_btn = document.createElement("a");
+	var send_btn = document.createElement("input");
 	var log_btn = document.createElement("a");
 	
+	send_btn.type ="button";
+	
+
 	user_comment_div.classList.add("user_comment_div");
 	text_area.classList.add("text_area");
 	text_area.id = "text";
+	text_area.placeholder = "Leave a comment...";
 	send_btn.classList.add("send_btn");
 	log_btn.classList.add("log_btn");
 	log_btn.href ="login.html";
 	log_btn.target ="_blanc";
 	log_btn.innerHTML = "Log in to leave a comment";
-	send_btn.innerHTML = "SEND";
+	send_btn.value = "SEND";
 	send_btn.setAttribute("onclick","addComment()");
 	
 	user_comment_div.appendChild(text_area);
@@ -211,4 +226,63 @@ function convertToTimeString(time_str){
 function compareTime(a, b) {
   if (a.timestamp > b.timestamp) return 1;
   if (a.timestamp < b.timestamp) return -1;
+}
+
+function loadLikeState(elem,action) {
+
+	if(current_user){
+		console.log(elem.id);
+		var post_id = elem.id; 
+
+		firebase.database().ref('/posts/'+post_id+'/likes/'+current_user.uid).once('value').then(function(snapshot) {
+	  		var like_state = snapshot.val();
+
+	  		if(like_state!=action){
+
+	  			if(like_state===null){
+	  				changeRating(elem,action);
+	  			}
+	  			else{
+
+	  				if(action>0) action++;
+	  				else action--;
+	  				changeRating(elem,action);
+	  			}
+	  		}
+		});	
+	}
+}
+
+function changeRating(elem,action){
+
+	var post_id = elem.id; 
+	var parent = elem.parentElement;
+	
+	var active = parent.getElementsByClassName("active_btn");
+	if(active.length >0){
+		active[0].classList.remove("active_btn");
+	}
+	elem.classList.add("active_btn");
+
+	firebase.database().ref('/posts/'+post_id+'/rating').once('value').then(function(snapshot) {
+  		var rating = snapshot.val();
+  		rating+=action;
+  	
+  		if(action>1) action--;
+  		if(action<-1) action++;
+
+	  	var updates_rating = {};
+	  	var updates_user = {};
+  		updates_rating['/posts/' + post_id+"/rating"] = rating;
+  		updates_user['/posts/' + post_id+"/likes/"+current_user.uid] = action;
+
+  		firebase.database().ref().update(updates_rating);
+  		firebase.database().ref().update(updates_user);
+
+  		firebase.database().ref('/posts/'+post_id+'/rating').once('value').then(function(snapshot){
+
+  			document.getElementById("rate"+post_id).innerHTML = "Rating : " + snapshot.val();
+  		});
+
+	});	
 }

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+	<canvas id="canvas" style="background-color: white"></canvas>
+	<canvas id="canvas2" style="background-color: white"></canvas>
+	<script type="text/javascript">
+		
+		var img = document.getElementById("img");
+		var canvas = document.getElementById("canvas");
+		var canvas2 = document.getElementById("canvas2");
+		var ctx2 = canvas2.getContext('2d');
+		var ctx = canvas.getContext('2d');
+
+		
+		var dataURL;
+
+		var height = 800;
+		var width = 800;
+
+		canvas.width = width;
+     	canvas.height = height;
+
+     	canvas2.width = width;
+     	canvas2.height = height;
+
+     	var img1 = new Image();
+     	var new_image = new Image();
+
+
+     	ctx.fillStyle ="white";
+        ctx.font = "30px Arial";
+
+        ctx2.fillStyle ="white";
+        ctx2.font = "30px Arial";
+        
+        img1.onload = function () {
+            ctx.transform(0, 1, -1, 0, height , 0);
+            ctx.drawImage(img1, 0, 0);
+           	dataURL = canvas.toDataURL();
+           	new_image.src = dataURL;
+        };
+
+        new_image.onload = function(){
+
+        	ctx2.drawImage(new_image,0,0);
+        	ctx2.fillText("HEllo World",10,50);
+
+        };
+
+
+
+        img1.src = '6.png';
+
+
+	</script>
+</body>
+</html>

@@ -7,7 +7,7 @@ var stroke_color;
 var stroke_size;
 var orientation;
 var ctx;
-var is_temp_open = false;
+var is_temp_open = true;
 
 
 initFirebase();
@@ -162,6 +162,7 @@ function uploadImage (title) {
 			    	url:snapshot.downloadURL,
 			    	author:current_user.uid,
 			    	author_name:current_user.nickname,
+			    	coments_count:0,
 			    	timestamp:Math.floor(Date.now())
 		    	}
 		  	
@@ -224,6 +225,10 @@ function updateResults (img_canvas, data) {
 
 
 function loadToCanvas(){
+
+
+	if(is_temp_open) 
+		showHideTemp();
 
 	var file =  document.getElementById("file").files[0];
 
