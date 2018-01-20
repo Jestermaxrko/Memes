@@ -22,46 +22,102 @@
 		<form>
 
 			<div class="load_img">
-				<input type="text"  id="title_post" placeholder="title">
+				<input type="text"  id="title_post" placeholder="Title">
 				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()">
 				<br>	
 			</div>
 
-			<div class="editor" id="editor" style="display: none;">
+
+
+			<div class="templates" id="templates"> 
+
+			<div class="temp_tittle" onclick="showHideTemp(event)">
+				<h3 class="display_inline">Templates</h3>
+				<div class="display_inline"> <img src="images/arrow_bottom.png" id="arrow" onclick="showHideTemp(event)" > </div>
+			</div>
+			
+
+			<div class="table_continer" id="table_continer"  style="display: none">
+				<table id ="table"> 
+
+				
+				</table>
+			</div>
+
+
+			</div>
+
+			<div class="editor" id="editor" style="display: none">
 
 				<div class="instruments">
 					
-					<ul>
-						<li> 
-							<span>Font : </span>
-							<input type="text" class="font_list" id="font_size" onchange="setDrawStyles()" />
+
+					<div class="left">
+
+						<div class="top_line">
 							
-						 </li>
+							<div class="left-item display_inline"> 
+								<span>Font Size : </span>
+							</div>
 
-						 <li>
-						 
-						 	<span>Text : </span>
-						 	<input type="color" name="" id="text_color" value="#ffffff" onchange="setDrawStyles()"/>
+							<div class="right-item display_inline"> 
+								<input type="text" class="font_list" id="font_size" onchange="setDrawStyles()" />
+							</div>
 
-						 </li>
+						</div>
 
-						 <li>
-						 
-						 	<span>Stroke : </span>
-						 	<input type="color"  id="stroke_color" name="" onchange="setDrawStyles()"/>
+						<div class="bottom_line">
+							
+							<div class="left-item display_inline"> 
+								<span>Stroke Size : </span>
+							</div>
 
-						 </li>
+							<div class="right-item display_inline">
+								<input type="text" class="font_list" id="stroke" onchange="setDrawStyles()" />
+							 </div>
 
-					</ul>
+
+						</div>
+
+
+					</div>
+
+					<div class="right">
+							
+						<div class="top_line">
+							
+							<div class="left-item display_inline"> 
+								<span>Text Color : </span>
+							</div>
+							<div class="right-item display_inline">
+								<input type="color" name="" id="text_color" value="#ffffff" onchange="setDrawStyles()"/>
+							 </div>
+
+						</div>
+
+						<div class="bottom_line">
+							
+							<div class="left-item display_inline"> 
+								<span>Stroke Color : </span>
+							</div>
+
+							<div class="right-item display_inline">
+								<input type="color"  id="stroke_color" name="" onchange="setDrawStyles()"/>
+							</div>
+
+							
+						</div>
+
+					</div>
 
 				</div>
 
 				<div class="preview">
-					<input type="text" id="top" class="text_input" onkeyup="changeText(this.value,bottom.value)" placeholder="top text">
+					<input type="text" id="top" class="text_input" onkeyup="changeText(this.value,bottom.value)" placeholder="Top text">
 
 					<canvas id="baseCanvas"></canvas>
 
-					<input type="text" id="bottom" class="text_input" onkeyup="changeText(top.value,this.value)" placeholder="bottom text">
+					<input type="text" id="bottom" class="text_input" onkeyup="changeText(top.value,this.value)" placeholder="Bottom text">
 				</div>
 
 			</div>
@@ -69,6 +125,7 @@
 
 			<a  id ="save_btn" onclick="uploadImage(title_post.value)" style="display: none;">Save</a>
 		</form>
+
 
 	</div>
 </body>
