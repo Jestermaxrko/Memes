@@ -143,7 +143,7 @@ function uploadImage (title) {
 				name = (+new Date());
 			}*/
 
-			var name = (+new Date());
+			var name = (+new Date()) +"dsdsad";
 			console.log(name);
 
 			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
