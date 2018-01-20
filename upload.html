@@ -15,15 +15,14 @@
 
 </head>
 <body>
-	<div class="container">
-
+	<div class="container" id="container">
 
 		
-		<form>
+		<form id="form" >
 
 			<div class="load_img">
 				<input type="text"  id="title_post" placeholder="Title">
-				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()">
+				<input type="file"  id="file" placeholder="image" onchange="loadToCanvas()" accept="image/jpg, image/jpeg , image/png ,image/bmp">
 				<br>	
 			</div>
 
@@ -61,7 +60,7 @@
 							</div>
 
 							<div class="right-item display_inline"> 
-								<input type="text" class="font_list" id="font_size" onchange="setDrawStyles()" />
+								<input type="number" class="font_list" id="font_size" onchange="setDrawStyles()" />
 							</div>
 
 						</div>
@@ -73,7 +72,7 @@
 							</div>
 
 							<div class="right-item display_inline">
-								<input type="text" class="font_list" id="stroke" onchange="setDrawStyles()" />
+								<input type="number" class="font_list" id="stroke" onchange="setDrawStyles()" />
 							 </div>
 
 
@@ -123,9 +122,18 @@
 			</div>
 
 
+			<div class="loading" id="loading" style="display: none;">
+			
+			<h1>Saving...<h1>
+
+			</div>
+
+
 			<a  id ="save_btn" onclick="uploadImage(title_post.value)" style="display: none;">Save</a>
 		</form>
 
+
+		
 
 	</div>
 </body>
