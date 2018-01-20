@@ -240,14 +240,23 @@ function loadLikeState(elem,action) {
 	  		if(like_state!=action){
 
 	  			if(like_state===null){
+	  				console.log("Yeees");
 	  				changeRating(elem,action);
 	  			}
 	  			else{
 
-	  				if(action>0) action++;
-	  				else action--;
+	  				if(like_state!=0){
+		  				if(action>0) action++;
+		  				else action--;
+		  			}
+		  			
 	  				changeRating(elem,action);
+
 	  			}
+	  		}else {
+
+	  			getOffLike(elem,action);
+
 	  		}
 		});	
 	}
@@ -285,4 +294,36 @@ function changeRating(elem,action){
   		});
 
 	});	
+}
+
+function getOffLike(elem,action){
+
+	var post_id = elem.id; 
+	var parent = elem.parentElement;
+
+	var active = parent.getElementsByClassName("active_btn");
+	if(active.length >0){
+		active[0].classList.remove("active_btn");
+	}
+
+
+	firebase.database().ref('/posts/'+post_id+'/rating').once('value').then(function(snapshot) {
+  		var rating = snapshot.val();
+  		rating+=(-1)*action;
+  
+	  	var updates_rating = {};
+	  	var updates_user = {};
+  		updates_rating['/posts/' + post_id+"/rating"] = rating;
+  		updates_user['/posts/' + post_id+"/likes/"+current_user.uid] = 0;
+
+  		firebase.database().ref().update(updates_rating);
+  		firebase.database().ref().update(updates_user);
+
+  		firebase.database().ref('/posts/'+post_id+'/rating').once('value').then(function(snapshot){
+
+  			document.getElementById("rate"+post_id).innerHTML = "Rating : " + snapshot.val();
+  		});
+
+	});	
+
 }
