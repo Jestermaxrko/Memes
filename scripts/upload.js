@@ -133,7 +133,7 @@ function uploadImage (title) {
 
 		const ref = firebase.storage().ref();
 		var image = new Image();
-		//image.src  = document.getElementById("baseCanvas").toDataURL();
+		image.src  = document.getElementById("baseCanvas").toDataURL();
 		const file = document.querySelector('#file').files[0];
 
 		
@@ -153,6 +153,8 @@ function uploadImage (title) {
 			}
 
 			console.log(name);
+
+			console.log(image.src);
 
 			ref.child(name).putString(image.src, 'data_url').then(function(snapshot) {
   			 	
