@@ -15,6 +15,11 @@ var is_temp_open = true;
 initFirebase();
 checkUserIsSignIn();
 
+sendNotification('New Post', {
+						body: current_user.nickname + "Posted a new photo",
+						icon: 'icon.jpg',
+						dir: 'auto'
+						});
 
 
 //var ref = new Firebase('application.firebaseio.com/posts');
@@ -384,8 +389,6 @@ function showHideTemp(event){
 
 
 function sendNotification(title, options) {
-
-	Notification.permission = "granted";
 
 
 	// Проверим, поддерживает ли браузер HTML5 Notifications
