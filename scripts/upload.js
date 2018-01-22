@@ -15,8 +15,9 @@ var is_temp_open = true;
 initFirebase();
 checkUserIsSignIn();
 
+
 sendNotification('New Post', {
-						body: current_user.nickname + "Posted a new photo",
+						body: "s" + "Posted a new photo",
 						icon: 'icon.jpg',
 						dir: 'auto'
 						});
