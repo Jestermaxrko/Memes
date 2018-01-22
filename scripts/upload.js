@@ -11,11 +11,7 @@ var is_temp_open = true;
 
 
 
-sendNotification('New Post', {
-						body: 'Тестирование HTML5 Notifications',
-						icon: 'icon.jpg',
-						dir: 'auto'
-						});
+
 initFirebase();
 checkUserIsSignIn();
 
@@ -181,6 +177,12 @@ function uploadImage (title) {
 		  	
 		  		firebase.database().ref('posts/').push(post).then(function(){
 
+
+		  			sendNotification('New Post', {
+						body: current_user.nickname + "Posted a new photo",
+						icon: 'icon.jpg',
+						dir: 'auto'
+						});
 		  			
 		  			window.location.replace("index.html");	
 		  		});
