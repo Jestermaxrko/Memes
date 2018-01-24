@@ -386,7 +386,7 @@ function checkSubscription() {
   	if(!local_token) local_token = "undefined";
 
 
-  	FIREBASE_DATABASE.ref('/tokens').orderByChild(local_token).equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then((data) => {
+  	FIREBASE_DATABASE.ref('/tokens').orderByChild("token").equalTo(local_token).once('value').then((data) => {
 
   		if ( data.val() && user_uid ) {
       	
@@ -421,15 +421,27 @@ function unsubscribeFromNotifications() {
     .then((token) => FIREBASE_MESSAGING.deleteToken(token))
     .then(() => FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value'))
     .then((snapshot) => {
-      const key = Object.keys(snapshot.val())[0];
-      return FIREBASE_DATABASE.ref('/tokens').child(key).remove();
-    })
-    .then(() => { checkSubscription();
-    	localStorage.removeItem("browserTokenMemSite");
 
-    })
+    	var user_uid= snapshot.val();
+    	const key = Object.keys(snapshot.val())[0];
+    	var local_token = localStorage.getItem("browserTokenMemSite");
+  		if(!local_token) local_token = "undefined";
+
+
+     	FIREBASE_DATABASE.ref('/tokens').orderByChild("token").equalTo(local_token).once('value').
+    	then((data)=>{
+
+    		if(user_uid && data.val()){
+	    		checkSubscription();
+	    		localStorage.removeItem("browserTokenMemSite");
+	    		return FIREBASE_DATABASE.ref('/tokens').child(key).remove();
+    		}
+
+
+    	})      	
     .catch((err) => {
       console.log("error deleting token :(");
     });
+})
 }
 }
