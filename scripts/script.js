@@ -62,8 +62,10 @@ function checkUserIsSignIn(){
   			document.getElementById("out_btn").style.display="";
   			document.getElementById("login_btn").style.display = "none";
   			document.getElementById("register_btn").style.display="none";
+  			document.getElementById("notifaction").style.display ="";
+  			checkSubscription();
 
-  			//subscribeToNotifications();
+  			//ssubscribeToNotifications();
 
   			firebase.database().ref("/users/"+user.uid).once('value').then(function(snapshot){
 				current_user = snapshot.val();
@@ -377,9 +379,17 @@ function handleTokenRefresh() {
 function checkSubscription() {
   FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then((snapshot) => {
     if ( snapshot.val() ) {
-      
+      	
+    	document.getElementById("not_img").src = "images/notifaction_on.png";
+    	document.getElementById("notifaction").onclick = unsubscribeFromNotifications;
+    	//checkSubscription();
+
+
     } else {
-      
+      	
+    	document.getElementById("not_img").src = "images/notifaction_off.png";
+    	document.getElementById("notifaction").onclick = subscribeToNotifications;
+    	//checkSubscription();
     }
   });
 }
