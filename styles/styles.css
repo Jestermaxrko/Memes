@@ -161,6 +161,15 @@ li a:hover, li a:focus {
 }
 
 
+#notifaction {
+	padding: 2px 16px;
+}
+
+#not_img {
+	padding-top: 8px;
+	padding-bottom: 2px;  
+	height: 30px;
+}
 
 
 @media only screen and (max-width: 900px){
