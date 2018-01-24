@@ -369,6 +369,8 @@ FIREBASE_MESSAGING.onTokenRefresh(handleTokenRefresh);
 
 function handleTokenRefresh() {
   return FIREBASE_MESSAGING.getToken().then((token) => {
+
+  	localStorage.setItem('browserTokenMemSite', token);
     FIREBASE_DATABASE.ref('/tokens').push({
       token: token,
       uid: FIREBASE_AUTH.currentUser.uid
@@ -378,7 +380,15 @@ function handleTokenRefresh() {
 
 function checkSubscription() {
   FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then((snapshot) => {
-    if ( snapshot.val() ) {
+    
+  	var user_uid= snapshot.val();
+  	var local_token = localStorage.getItem("browserTokenMemSite");
+  	if(!local_token) local_token = "undefined";
+
+
+  	FIREBASE_DATABASE.ref('/tokens').orderByChild(local_token).equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then((data) => {
+
+  		if ( data.val() && user_uid ) {
       	
     	document.getElementById("not_img").src = "images/notifaction_on.png";
     	document.getElementById("notifaction").onclick = unsubscribeFromNotifications;
@@ -389,8 +399,11 @@ function checkSubscription() {
       	
     	document.getElementById("not_img").src = "images/notifaction_off.png";
     	document.getElementById("notifaction").onclick = subscribeToNotifications;
-    	//checkSubscription();
+	   	//checkSubscription();
     }
+
+
+  	});
   });
 }
 
@@ -411,7 +424,10 @@ function unsubscribeFromNotifications() {
       const key = Object.keys(snapshot.val())[0];
       return FIREBASE_DATABASE.ref('/tokens').child(key).remove();
     })
-    .then(() => checkSubscription())
+    .then(() => { checkSubscription();
+    	localStorage.removeItem("browserTokenMemSite");
+
+    })
     .catch((err) => {
       console.log("error deleting token :(");
     });
