@@ -368,7 +368,7 @@ FIREBASE_MESSAGING.onTokenRefresh(handleTokenRefresh);
 ======================== */
 
 function handleTokenRefresh() {
-  return FIREBASE_MESSAGING.getToken().then((token) => {
+  return FIREBASE_MESSAGING.getToken().then(function(token) {
 
   	localStorage.setItem('browserTokenMemSite', token);
     FIREBASE_DATABASE.ref('/tokens').push({
@@ -379,14 +379,14 @@ function handleTokenRefresh() {
 }
 
 function checkSubscription() {
-  FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then((snapshot) => {
+  FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value').then(function(snapshot){
     
   	var user_uid= snapshot.val();
   	var local_token = localStorage.getItem("browserTokenMemSite");
   	if(!local_token) local_token = "undefined";
 
 
-  	FIREBASE_DATABASE.ref('/tokens').orderByChild("token").equalTo(local_token).once('value').then((data) => {
+  	FIREBASE_DATABASE.ref('/tokens').orderByChild("token").equalTo(local_token).once('value').then(function(data){
 
   		if ( data.val() && user_uid ) {
       	
@@ -409,18 +409,18 @@ function checkSubscription() {
 
 function subscribeToNotifications() {
   FIREBASE_MESSAGING.requestPermission()
-    .then(() => handleTokenRefresh())
-    .then(() => checkSubscription())
-    .catch((err) => {
+    .then(function() {handleTokenRefresh();})
+    .then(function()  {checkSubscription();})
+    .catch(function (err){
       console.log("error getting permission :(");
     });
 }
 
 function unsubscribeFromNotifications() {
   FIREBASE_MESSAGING.getToken()
-    .then((token) => FIREBASE_MESSAGING.deleteToken(token))
-    .then(() => FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value'))
-    .then((snapshot) => {
+    .then(function(token) {FIREBASE_MESSAGING.deleteToken(token);})
+    .then(function() {FIREBASE_DATABASE.ref('/tokens').orderByChild("uid").equalTo(FIREBASE_AUTH.currentUser.uid).once('value')})
+    .then(function(snapshot) {
 
     	var user_uid= snapshot.val();
     	const key = Object.keys(snapshot.val())[0];
@@ -429,7 +429,7 @@ function unsubscribeFromNotifications() {
 
 
      	FIREBASE_DATABASE.ref('/tokens').orderByChild("token").equalTo(local_token).once('value').
-    	then((data)=>{
+    	then(function(data){
 
     		if(user_uid && data.val()){
 	    		checkSubscription();
@@ -439,7 +439,7 @@ function unsubscribeFromNotifications() {
 
 
     	})      	
-    .catch((err) => {
+    .catch(function(err){
       console.log("error deleting token :(");
     });
 })
