@@ -68,6 +68,7 @@ function checkUserIsSignIn(){
   			var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
   			if(!isSafari) checkSubscription();
+  			else document.getElementById("notifaction").style.display="none";
 
   			//ssubscribeToNotifications();
 
