@@ -63,7 +63,11 @@ function checkUserIsSignIn(){
   			document.getElementById("login_btn").style.display = "none";
   			document.getElementById("register_btn").style.display="none";
   			document.getElementById("notifaction").style.display ="";
-  			checkSubscription();
+
+
+  			var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  			if(!isSafari) checkSubscription();
 
   			//ssubscribeToNotifications();
 
