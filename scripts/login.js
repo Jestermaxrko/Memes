@@ -32,7 +32,7 @@ function signIn (email,password) {
 function checkUserIsSignIn(){
 	firebase.auth().onAuthStateChanged(function(user) {
   		if (user) {
-  			//window.location.replace("index.html");
+  			window.location.replace("index.html");
   		} 
 	});
 }
