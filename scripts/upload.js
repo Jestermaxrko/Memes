@@ -44,6 +44,12 @@ function checkUserIsSignIn(){
 				//loadTemplates();
 				getTemplates();
 
+				var trans_src  = localStorage.getItem("src_to_display");
+				if(trans_src){
+					localStorage.removeItem("src_to_display");
+					loadTransferedImage(trans_src);
+				}
+
 
   			});
   		} 
@@ -103,6 +109,32 @@ function displayTemplates(templates){
 	}
 }
 
+
+
+function loadTransferedImage(transfered_src){
+
+	showHideTemp();
+
+	var canvas = document.getElementById("baseCanvas");
+	 canvas.scrollIntoView();
+	 ctx = canvas.getContext("2d");
+	 img = document.createElement("img");
+
+	 img.onload = function(){
+		adaptFontSizes();
+		canvas.width = img.width;
+		canvas.height = img.height;
+		ctx.drawImage(img,0,0);
+	}
+
+	img.src = transfered_src;
+
+	document.getElementById("editor").style.display ="";
+   	document.getElementById("save_btn").style.display="";
+
+
+
+}
 
 function loadTemplteToCanvas(elem){
 	
