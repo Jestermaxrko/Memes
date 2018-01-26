@@ -124,7 +124,7 @@ function loadTransferedImage(transfered_src){
 		adaptFontSizes();
 		canvas.width = img.width;
 		canvas.height = img.height;
-		ctx.drawImage(img,0,0);
+		ctx.drawImage(img,0,0,img.width,img.height);
 	}
 
 	img.src = transfered_src;
@@ -151,7 +151,7 @@ function loadTemplteToCanvas(elem){
 		adaptFontSizes();
 		canvas.width = img.width;
 		canvas.height = img.height;
-		ctx.drawImage(img,0,0);
+		ctx.drawImage(img,0,0,img.width,img.height);
 	}
 
 	img.src = elem.children[0].src;
@@ -255,7 +255,7 @@ function updateResults (img_canvas, data) {
 		adaptFontSizes();
 		canvas.width = img.width;
 		canvas.height = img.height;
-		ctx.drawImage(img,0,0);
+		ctx.drawImage(img,0,0,img.width,img.height);
 	}
 
 	img.src = data_URL;
