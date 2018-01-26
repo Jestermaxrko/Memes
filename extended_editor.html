@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>JSDA</title>
+	<link rel="stylesheet" type="text/css" href="styles/extended_editor.css">
+	<script src="scripts/load-image.all.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-3.2.1.min.js"></script>
+	<script defer type="text/javascript" src="scripts/extended_editor.js"></script>
+</head>
+<body>
+
+
+	
+	<div class="container">
+
+
+		<div class="images_number">
+			
+			<input type="button" name="" value="One image" class="active_number" onclick="setOneImage(this)"
+			><input type="button" name="" value="Two images"  onclick="setTwoImages(this)">
+
+		</div>
+
+		<div class="image_loader">
+			<input type="file" id="file1" onchange="changeFile()">
+			<input type="file" id="file2" onchange="changeFile()" style="display: none">
+		</div>
+
+
+		<div class="editor" id="editor" style="display: none;">
+			
+
+			<div id="editor_panel" style="display: none;">
+				<input type="button" name="" onclick="swapSrc()" class="swap_btn button">
+				<input type="button" name="" onclick="changeOrientation(this)" class="vertical_btn button active_orientation">
+				<input type="button" name="" onclick="changeOrientation(this)" class="horizontal_btn button">
+			</div>
+
+			<canvas id="canvas">
+				
+			</canvas>
+
+			<div class="text_panel" id="text_panel">
+					
+				<h2 class="title">Add text <span class="hint">Click on the image where you want to add text<span> </h2>
+				
+				<ul id="text_list">
+				
+				</ul>
+
+				<input type="button" name="" id="next_btn" value="Next" onclick="transferImage()"> 
+
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>
